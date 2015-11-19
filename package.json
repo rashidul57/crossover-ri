@@ -24,7 +24,12 @@
   "main": "server.js",
   "author": "mrashidbd2000@gmail.com",
   "license": "",
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-uglify": "^0.10.1",
+    "requirejs": "^2.1.21"
+  },
   "engines": {
     "node": "5.1.0"
   }

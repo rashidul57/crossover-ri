@@ -1,4 +1,4 @@
 module.exports = {
-    port: 3210,
+    port: 3000,
     ip: 'localhost'
 }
