@@ -16,7 +16,7 @@ app.set('view engine', 'html');
 app.set('view options', { layout: false })
   
 app.use(methodOverride());
-app.use(session({ resave: true, saveUninitialized: true, secret: 'cross secret' }));
+//app.use(session({ resave: true, saveUninitialized: true, secret: 'cross secret' }));
 
 // parse application/json
 app.use(bodyParser.json());
