@@ -202,18 +202,11 @@ app.get('/getDetailData/:reportId/:recordId', function(req, res) {
 });
 
 //Patch for backward compatibility
-app.address = function() {
-    return { port : port};
-};
-
-app.get('/getCsv', function (req, res) {
-    res.set('Content-Type', 'application/octet-stream');
-	res.send("1,2,3\n\r4,5,6");
-});
+app.set('port', (process.env.PORT || port));
 
 var ip = "localhost";
-app.listen(port, ip, function(){
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+app.listen(port, function(){
+  console.log("Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 });
 
 
