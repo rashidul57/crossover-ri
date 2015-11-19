@@ -1,0 +1,208 @@
+.grid{
+    clear: both;
+    margin-top: 40px;
+    border: 1px solid $borderColor;
+    border-right: 2px solid $borderColor;
+    .row{
+        border-top: 1px solid $borderColor;
+        line-height: $rowHeight;
+        vertical-align: middle;
+        .first-col{
+            text-align: center;
+            .left-color-mark{
+                width: 7px;
+                height: $detailHeight + 1;
+                position: absolute;
+                margin-left: -15px;
+            }
+        }
+
+        div[class*=" col-"] {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #8a8a8a;
+            cursor: pointer;
+        }
+        .time{
+            padding-left: 20px;
+            &:before{
+                content: "";
+                background-image: url("../images/clock.png");
+                background-repeat: no-repeat;
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                position: absolute;
+                margin: 25px 0 0 -12px;
+            }
+        }
+        .build-to-test{
+            height: $rowHeight;
+        }
+
+        .owner{
+            font-size: 12px;
+        }
+
+        .datetime{
+            font-size: 12px;
+        }
+
+        .status{
+            text-transform: capitalize;
+            padding-left: 20px;
+            &:before{
+                content: "";
+                background-repeat: no-repeat;
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                position: absolute;
+                margin: 24px 0 0 -18px;
+            }
+        }
+
+        .last-col{
+              position: static;
+        }
+
+        &.master{
+            div[class*=" col-"] {
+                color: #767676;
+            }
+            .last-col{
+                border-top: 0px none!important;
+            }
+            &.failed{
+                div[class*="col-"] {
+                    border-top: $masterBorderHeight solid $failedColor;
+                    &.last-col{
+                        border-top: 0px none;
+                    }
+                }
+            }
+            &.pending{
+                div[class*=" col-"] {
+                    border-top: $masterBorderHeight solid $pendingColor;
+                }
+            }
+            &.running{
+                div[class*=" col-"] {
+                    border-top: $masterBorderHeight solid $runningColor;
+                }
+            }
+            &.passed{
+                div[class*=" col-"] {
+                    border-top: $masterBorderHeight solid $passedColor;
+                }
+            }
+        }
+
+        &.detail{
+            border-top: 0px none;
+            line-height: $detailHeight;
+            .first-col{
+                position: static;
+                .left-color-mark{
+                    margin-top: -1px;
+                }
+            }
+            .last-col{
+                border-top: 0px none!important;
+                padding-left: 0px;
+                .detail-status{
+                    height: $rowHeight + $detailHeight + $masterBorderHeight + 1;
+                    margin-top: - ($rowHeight + $masterBorderHeight);
+                    position: absolute;
+                    width: 16%;
+                    display: block;
+                    border-left: 1px solid $borderColor;
+                    border-right: 1px solid $borderColor;
+                    background-color: #f7f7f7;
+                    cursor: default;
+                    canvas{
+                        background-color: $summaryNormalBg;
+                    }
+
+                    &.failed{
+                        canvas{
+                            background-color: $summaryFailedBg;
+                        }
+                    }
+                }
+            }
+            div[class*="col-"] {
+                border-top: 1px solid $borderColor;
+            }
+
+            .build-section{
+                width: 25%;
+                .col{
+                    float: left;
+                    .time:before{
+                        margin-top: 40px;
+                    }
+                }
+            }
+        }
+        &.header{
+            line-height: $headerHeight;
+            div[class*=" col-"] {
+                font-size: 15px;
+                cursor: default;
+            }
+            .first-col{
+                .left-color-mark{
+                    background-color: #d2d2d2;
+                }
+            }
+        }
+
+        &.passed{
+            .first-col .left-color-mark{
+                background-color: $passedColor;
+            }
+            .status{
+                color: $passedColor;
+                &:before{
+                    background-image: url("../images/passed.png");
+                }
+            }
+        }
+        &.failed{
+            .first-col .left-color-mark{
+                background-color: $failedColor;
+            }
+            .status{
+                color: $failedColor;
+                &:before{
+                    background-image: url("../images/failed.png");
+                }
+            }
+        }
+        &.pending{
+            .first-col .left-color-mark{
+                background-color: $pendingColor;
+            }
+            .status{
+                color: $pendingColor;
+                &:before{
+                    background-image: url("../images/pending.png");
+                }
+            }
+        }
+        &.running{
+            .first-col .left-color-mark{
+                background-color: $runningColor;
+            }
+            .status{
+                color: $runningColor;
+                &:before{
+                    background-image: url("../images/running.png");
+                }
+            }
+        }
+    }
+
+}

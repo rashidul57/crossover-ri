@@ -1,0 +1,27 @@
+{
+  "name": "Crossover",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Test application",
+  "keywords": [],
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "forever": "^0.15.1",
+    "method-override": "^2.3.5",
+    "path": "^0.12.7",
+    "underscore": "^1.8.3"
+  },
+  "scripts": {
+    "debug": "node debug server.js",
+    "start": "node server.js"
+  },
+  "main": "server.js",
+  "author": "mrashidbd2000@gmail.com",
+  "license": "",
+  "devDependencies": {},
+  "engines": {
+    "node": "5.1.0"
+  }
+}
