@@ -13,6 +13,10 @@
     "path": "^0.12.7",
     "underscore": "^1.8.3"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rashidul57/crossover-ri"
+  },
   "scripts": {
     "debug": "node debug server.js",
     "start": "node server.js"
