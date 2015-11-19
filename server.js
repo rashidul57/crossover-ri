@@ -2,7 +2,7 @@ var express = require('express'),
     _ = require('underscore'),
     config = require('./config'),
     methodOverride = require('method-override'),
-    session = require('express-session'),
+    //session = require('express-session'),
     bodyParser = require('body-parser'),
     path = require('path'),
     port = config.port,
@@ -16,7 +16,7 @@ app.set('view engine', 'html');
 app.set('view options', { layout: false })
   
 app.use(methodOverride());
-app.use(session({ resave: true, saveUninitialized: true, secret: 'cross secret' }));
+//app.use(session({ resave: true, saveUninitialized: true, secret: 'cross secret' }));
 
 // parse application/json
 app.use(bodyParser.json());
