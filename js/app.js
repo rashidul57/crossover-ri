@@ -1,22 +1,22 @@
-/**
- * loads sub modules and wraps them up into the main module
- * this should be used for top-level module definitions only
- */
-define([
-    'angular',
+var app = angular.module('csTest', [
     'ui.router',
-    'jquery',
-    'lodash',
-    './controllers/index',
-    './directives/index',
-    './services/index'
-], function (ng) {
-    'use strict';
+    'templates-dist'
+])
+.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    //use angular-ui-router to manage routing
+    $stateProvider.state('report1',{
+        url: '/report1',
+        templateUrl: 'templates/grid.html',
+        controller:'gridCtrl'
+    })
+    .state('report2',{
+        url: '/report2',
+        templateUrl: 'templates/grid.html',
+        controller:'gridCtrl'
+    });
 
-    return ng.module('app', [
-        'app.services',
-        'app.controllers',
-        'app.directives',
-        'ui.router'
-    ]);
+    $urlRouterProvider.otherwise('/report1');
+
 });
+
+

@@ -1,12 +1,21 @@
-define(['./module'], function (controllers) {
-    'use strict';
-    controllers.controller('gridController', ['$scope', 'drawingService', '$http', '$state', function ($scope, drawingService, $http, $state) {
+
+'use strict';
+app.controller('gridCtrl', [
+    '$scope',
+    '$rootScope',
+    'drawingService',
+    '$http',
+    '$state',
+    function ($scope, $rootScope, drawingService, $http, $state) {
         $scope.rows = [];
 
         var report = $state.current.name;
-        $http.get('/getReportData/' + report).then(function(response) {
-            $scope.rows = response.data;
-        });
+
+        if (report) {
+            $scope.rows = drawingService.getReportData(report, function (response) {
+                $scope.rows = response.data;
+            });
+        }
 
         /**
          * 
@@ -38,4 +47,3 @@ define(['./module'], function (controllers) {
             $scope.songs.push(song);
         };
     }]);
-});

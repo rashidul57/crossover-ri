@@ -1,11 +1,10 @@
-define(['./module'], function (services) {
-    'use strict';
-    services.value('drawingService', {
+app.factory('drawingService', function drawingService($http, $q) {
+    return {
 
-        getReportData: function ($http) {
-            //debugger
-            var reportId = 'report1';
-            return $http.get('/data/getReportData/' + reportId);
+        getReportData: function (reportId, callback) {
+            $http.get('/getReportData/' + reportId).then(function(response) {
+                 callback(response);
+            });
         },
 
         debug: false,
@@ -376,5 +375,5 @@ define(['./module'], function (services) {
             this.drawCircle(ctx, x, y, radius, color, stroke);
             this.drawCrossSign(ctx, x, y, radius, closeColor, closeStrokeWidth);
         }
-    });
+    }
 });
