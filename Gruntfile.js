@@ -8,11 +8,13 @@ module.exports = function(grunt) {
             'vendor/lodash/dist/lodash.js'
         ],
         appSrc = 'js/**/*.js',
+        testFiles = '!js/**/*_test.js',
         templates = 'dist/templates.js',
         uglifyFiles = {};
 
     jsList.push(appSrc);
     jsList.push(templates);
+    jsList.push(testFiles);
     uglifyFiles[minFile] = debugFile;
 
     grunt.initConfig ({
