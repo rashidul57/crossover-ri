@@ -126,6 +126,7 @@
                     }
 
                     &.failed{
+                        background-color: $summaryFailedBg;
                         canvas{
                             background-color: $summaryFailedBg;
                         }
@@ -205,4 +206,37 @@
         }
     }
 
+}
+
+
+.anim.ng-enter, .anim.ng-leave, .anim.ng-move {
+    -webkit-transition: 0.5s linear all;
+    -moz-transition: 0.5s linear all;
+    -o-transition: 0.5s linear all;
+    transition: 0.5s linear all;
+}
+
+.anim.ng-enter, .anim.ng-move {
+    opacity: 0;
+    height: 0;
+    top: -50px;
+    overflow: hidden;
+}
+
+.anim.ng-move.ng-move-active, .anim.ng-enter.ng-enter-active {
+    opacity: 1;
+    height: 176px;
+}
+
+.anim.ng-leave {
+    opacity: 1;
+    top: 0;
+    overflow: hidden;
+}
+
+.anim.ng-leave.ng-leave-active {
+    opacity: 0;
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }

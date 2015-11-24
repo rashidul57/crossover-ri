@@ -2,10 +2,11 @@ module.exports = function(grunt) {
     var debugFile = "dist/app.debug.js",
         minFile = debugFile.replace('debug', 'min'),
         jsList = [
-            'vendor/angular/angular.js',
-            'vendor/angular-ui-router/release/angular-ui-router.js',
-            'vendor/jquery/dist/jquery.js',
-            'vendor/lodash/dist/lodash.js'
+            'bower_components/angular/angular.js',
+            'bower_components/angular-ui-router/release/angular-ui-router.js',
+            'bower_components/angular-animate/angular-animate.js',
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/lodash/lodash.js'
         ],
         appSrc = 'js/**/*.js',
         testFiles = '!js/**/*_test.js',

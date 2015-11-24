@@ -1,68 +1,42 @@
 'use strict';
 
-app.directive('statusSummary', ['drawingService', '$window', '$compile', function (drawingService, $window, $compile) {
+app.directive('statusSummary', ['drawingService', '$window', '$compile', '$animate', function (drawingService, $window, $compile, $animate) {
     return {
         restrict: 'A',
         replace: false,
         link: function ($scope, element, attrs) {
-            var width, height, canvas,
+            var width, height, canvas, size,
                 rec = $scope.detailData,
                 status = rec.status,
                 colorArray = drawingService.getColorArray();
 
-            $($window).on("resize", redraw);
+            $($window).on("resize", draw);
 
             $scope.$watch(function () {
                 return $window.innerWidth;
             }, draw);
 
-            function redraw() {
-                drawingService.removeCanvas(element);
-                draw();
-            }
-
             function draw () {
-                var inval, size,
-                    offsetX = drawingService.offset,
-                    incStep = drawingService.increment;
-
                 try {
-                    inval = setInterval(function () {
-                        if (drawingService.debug) {
-                            offsetX = 0;
-                            clearInterval(inval);
-                        }
+                    size = drawingService.injectCanvas($scope, $compile, element);
+                    height = size.height;
+                    width = size.width;
 
-                        if (offsetX < incStep) {
-                            drawingService.removeCanvas(element);
-                            size = drawingService.injectCanvas($scope, $compile, element);
-                            height = size.height;
-                            width = size.width;
+                    var ctx = element.find('canvas')[0].getContext('2d'),
+                        radius = 18,
+                        innerLineWidth = 4,
+                        innerRad = radius - 5,
+                        usableWidth = width,
+                        fraction = width / 3,
+                        startX = radius + 10,
+                        middleX = fraction + fraction / 4 - radius,
+                        endX = 2 * fraction + fraction / 4 - radius,
+                        statusColor = colorArray[status + 'Color'];
 
-                            var ctx = element.find('canvas')[0].getContext('2d'),
-                                radius = 18,
-                                innerLineWidth = 4,
-                                innerRad = radius - 5,
-                                usableWidth = width,
-                                fraction = width / 3,
-                                startX = radius + 10,
-                                middleX = fraction + fraction / 4 - radius,
-                                endX = 2 * fraction + fraction / 4 - radius,
-                                statusColor = colorArray[status + 'Color'];
+                    $animate.addClass(element, 'anim');
+                    drawSummary (ctx, startX, statusColor, colorArray, rec);
 
-                            startX += offsetX;
-                            middleX += offsetX;
-                            endX += offsetX;
-
-                            drawSummary (ctx, startX, statusColor, colorArray, rec);
-
-                            offsetX += incStep;
-                        } else {
-                            clearInterval(inval);
-                        }
-                    }, drawingService.speed);
                 } catch (err) {
-                    clearInterval(inval);
                     console.log('Something happen unexpected: ' + err.message);
                 }
             }

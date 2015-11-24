@@ -4,78 +4,52 @@ app.directive('detailSteps', ['$window', '$compile', 'drawingService', function 
       restrict: 'A',
       replace: false,
       link: function ($scope, element, attrs) {
-          var width, height, canvas,
+          var width, height, canvas, size,
              rec = $scope.detailData,
              colorArray = drawingService.getColorArray(),
              status = rec.status,
              centerY = 47;
 
-          $(window).on("resize", redraw);
+          $(window).on("resize", draw);
 
           $scope.$watch(function () {
               return window.innerWidth;
           }, draw);
 
-          function redraw() {
-              drawingService.removeCanvas(element);
-              draw();
-          }
 
           function draw () {
-              var inval, size,
-                  offsetX = drawingService.offset,
-                  incStep = drawingService.increment;
-
               try{
-                  inval = setInterval(function () {
-                      if (drawingService.debug) {
-                          offsetX = 0;
-                          clearInterval(inval);
-                      }
+                  var size = drawingService.injectCanvas($scope, $compile, element);
+                  height = size.height;
+                  width = size.width;
 
-                      if (offsetX < incStep) {
-                          drawingService.removeCanvas(element);
-                          size = drawingService.injectCanvas($scope, $compile, element);
-                          height = size.height;
-                          width = size.width;
+                  var ctx = element.find('canvas')[0].getContext('2d'),
+                      statusColor = colorArray[status + 'Color'],
+                      usableWidth = width,
+                      fraction = (width - (width * 16) / 100) / 4,
+                      startX = 0,
+                      middleX = 1.45 * fraction,
+                      endX = 3.1 * fraction,
+                      statusColor = colorArray[status + 'Color'],
+                      buffer, bufferSeed;
 
-                          var ctx = element.find('canvas')[0].getContext('2d'),
-                              statusColor = colorArray[status + 'Color'],
-                              usableWidth = width,
-                              fraction = (width - (width * 16) / 100) / 4,
-                              startX = 0,
-                              middleX = 1.45 * fraction,
-                              endX = 3.1 * fraction,
-                              statusColor = colorArray[status + 'Color'],
-                              buffer, bufferSeed;
+                  if (rec.unitTest.completed) {
+                      bufferSeed = 5.15;
+                  } else {
+                      bufferSeed = 7;
+                  }
+                  buffer = bufferSeed * width / 100;
 
-                          startX += offsetX;
-                          middleX += offsetX;
-                          endX += offsetX;
+                  drawBuildSection(ctx, startX, centerY, statusColor, colorArray, rec);
+                  drawingService.drawArrow(ctx, middleX - buffer, centerY - 10);
+                  //drawingService.drawArrow(ctx, width/3 - 5, centerY - 10);
 
-                          if (rec.unitTest.completed) {
-                              bufferSeed = 5.15;
-                          } else {
-                              bufferSeed = 7;
-                          }
-                          buffer = bufferSeed * width / 100;
+                  drawTestSection(ctx, middleX, centerY, statusColor, colorArray, rec, 70, 2);
 
-                          drawBuildSection(ctx, startX, centerY, statusColor, colorArray, rec);
-                          drawingService.drawArrow(ctx, middleX - buffer, centerY - 10);
-                          //drawingService.drawArrow(ctx, width/3 - 5, centerY - 10);
-
-                          drawTestSection(ctx, middleX, centerY, statusColor, colorArray, rec, 70, 2);
-
-                          drawingService.drawArrow(ctx, endX - buffer, centerY - 10);
-                          //drawingService.drawArrow(ctx, 2 * width/3 - 5, centerY - 10);
-                          drawTestSection(ctx, endX, centerY, statusColor, colorArray, rec, 110, 3);
-                          offsetX += incStep;
-                      } else {
-                          clearInterval(inval);
-                      }
-                  }, drawingService.speed);
+                  drawingService.drawArrow(ctx, endX - buffer, centerY - 10);
+                  //drawingService.drawArrow(ctx, 2 * width/3 - 5, centerY - 10);
+                  drawTestSection(ctx, endX, centerY, statusColor, colorArray, rec, 110, 3);
               } catch (err) {
-                  clearInterval(inval);
                   console.log('Something happen unexpected: ' + err.message);
               }
           }

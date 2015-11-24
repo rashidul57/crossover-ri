@@ -1,0 +1,26 @@
+{
+  "name": "Crossover",
+  "description": "Test application",
+  "main": "server.js",
+  "authors": [
+    "mrashidbd2000@gmail.com"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/rashidul57/crossover-ri",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "lodash": "~3.10.1",
+    "jquery": "~2.1.4",
+    "angular-animate": "~1.4.8"
+  }
+}

@@ -7,23 +7,6 @@ app.factory('drawingService', function drawingService($http, $q) {
             });
         },
 
-        debug: false,
-
-        /**
-         * Animation speed in milliseconds
-         */
-        speed: 20,
-
-        /**
-         * Starting X coording of canvas for animation
-         */
-        offset: -700,
-
-        /**
-         * increment offset by this pixels
-         */
-        increment: 50,
-
         /**
          * List of colors used through the client side drawing 
          */
@@ -77,12 +60,18 @@ app.factory('drawingService', function drawingService($http, $q) {
          */
         injectCanvas: function($scope, $compile, element) {
             var canvas,
-                height = element[0].clientHeight || 109, //for detail it doesn't get the value
+                height = element[0].clientHeight,
                 width = element[0].clientWidth;
 
             if (!width && this.isIE()) {
                 width = $(element).width();
             }
+
+            //for detail it doesn't get the value
+            if (height < 30) {
+                height = element.attr('height');
+            }
+            this.removeCanvas(element);
             canvas = angular.element('<canvas height="' + height + '" width="' +  width + '"></canvas>');
             $compile(canvas)($scope);
             element.append(canvas);

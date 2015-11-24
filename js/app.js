@@ -1,6 +1,7 @@
 var app = angular.module('csTest', [
     'ui.router',
-    'templates-dist'
+    'templates-dist',
+    'ngAnimate'
 ])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     //use angular-ui-router to manage routing
