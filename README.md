@@ -10,3 +10,10 @@ $ node server
 
 #Now the application is running in
  http://localhost:3000
+
+# on any change push to heroku
+$ git push heroku master
+
+#on Heroku it is
+https://crossover-ri.herokuapp.com/
+
