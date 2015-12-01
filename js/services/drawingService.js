@@ -1,8 +1,20 @@
-app.factory('drawingService', function drawingService($http, $q) {
+app.factory('drawingService', function drawingService($q, $http) {
     return {
 
-        getReportData: function (reportId, callback) {
-            $http.get('/getReportData/' + reportId).then(function(response) {
+        getReportData: function (reportId) {
+            var deferred = $q.defer();
+            $http.get('/getReportData/' + reportId)
+                .success(function(data) {
+                    deferred.resolve(data);
+                })
+                .error(function() {
+                    deferred.reject();
+                });
+            return deferred.promise;
+        },
+
+        getReportDetailData: function (reportId, recId, callback) {
+            $http.get('/getDetailData/' + reportId + '/' + recId).then(function(response) {
                  callback(response);
             });
         },

@@ -1,4 +1,3 @@
-
 'use strict';
 app.controller('gridCtrl', [
     '$scope',
@@ -12,8 +11,12 @@ app.controller('gridCtrl', [
         var report = $state.current.name;
 
         if (report) {
-            $scope.rows = drawingService.getReportData(report, function (response) {
-                $scope.rows = response.data;
+            drawingService.getReportData(report)
+              .then(function(response) {
+                  $scope.rows = response;
+              })
+              .catch(function() {
+                $scope.error = 'Error to read data';
             });
         }
 
@@ -22,28 +25,31 @@ app.controller('gridCtrl', [
  * @param {Object} rec: Record object regarding to the acting row
          */
         $scope.expandRow = function (rec) {
+            $scope.clearDetailInfo();
             if (rec.id && (!$scope.expandedRow || $scope.expandedRow && $scope.expandedRow.id != rec.id)) {
-                $http.get('/getDetailData/' + report + '/' + rec.id).then(function(response) {
-                    //remove previously expanded detail row
-                     _.remove($scope.rows, function(_rec) {
-                        return _rec.detail;
-                    });
-                    //Remove attribute that represents the previously expanded row 
-                    _.map($scope.rows, function(_rec) {
-                        delete _rec.master;
-                        return _rec;
-                    });
-
+                delete $scope.expandedRow;
+                drawingService.getReportDetailData(report, rec.id, function (response) {
                     var index = _.indexOf($scope.rows, rec);
                     $scope.detailData = response.data;
                     $scope.rows[index].master = true;
                     $scope.expandedRow = $scope.rows[index];
                     $scope.rows.splice(index + 1, 0, response.data);
                 });
+            } else {
+                delete $scope.expandedRow;
             }
         }
 
-        $scope.addSong = function(song) {
-            $scope.songs.push(song);
-        };
+        $scope.clearDetailInfo = function () {
+            //remove previously expanded detail row
+             _.remove($scope.rows, function(_rec) {
+                return _rec.detail;
+            });
+            //Remove attribute that represents the previously expanded row 
+            _.map($scope.rows, function(_rec) {
+                delete _rec.master;
+                return _rec;
+            });
+        }
+
     }]);
